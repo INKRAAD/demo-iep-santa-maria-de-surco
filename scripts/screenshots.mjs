@@ -21,11 +21,33 @@ async function shoot(name, viewport, opts = {}) {
   await page.goto(BASE + (opts.query || ''), { waitUntil: 'networkidle' })
   await page.waitForTimeout(opts.wait ?? 4200)
   if (opts.full) {
-    // recorrer para disparar animaciones de scroll
+    // Captura "cosida": se recorre la página por pantallas y se unen (evita artefactos del fullPage de Chrome en páginas altas)
     const h = await page.evaluate(() => document.documentElement.scrollHeight)
-    for (let y = 0; y < h; y += Math.round(viewport.height * 0.6)) { await page.evaluate((yy) => window.scrollTo(0, yy), y); await page.waitForTimeout(120) }
-    await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(800)
-    await page.screenshot({ path: `${OUT}${name}.png`, fullPage: true })
+    for (let y = 0; y < h; y += Math.round(viewport.height * 0.6)) { await page.evaluate((yy) => window.scrollTo(0, yy), y); await page.waitForTimeout(150) }
+    await page.waitForTimeout(800)
+    const total = await page.evaluate(() => document.documentElement.scrollHeight)
+    const parts = []
+    for (let y = 0, i = 0; y < total; y += viewport.height, i++) {
+      await page.evaluate((yy) => window.scrollTo(0, yy), y)
+      if (i === 1) await page.addStyleTag({ content: 'header, a[aria-label^="Escríbenos por WhatsApp"] { visibility: hidden !important; }' })
+      await page.waitForTimeout(450)
+      const real = await page.evaluate(() => window.scrollY)
+      const file = `${OUT}_part${i}.png`
+      await page.screenshot({ path: file })
+      parts.push({ file, y: real })
+    }
+    const { execFileSync } = await import('node:child_process')
+    execFileSync('python3', ['-c', `
+import json,sys,os
+from PIL import Image
+parts=json.loads(sys.argv[1]); total=int(sys.argv[2]); out=sys.argv[3]
+first=Image.open(parts[0]['file']); W,H=first.size; s=W/${viewport.width}
+canvas=Image.new('RGB',(W,int(total*s)),'white')
+for p in parts:
+    im=Image.open(p['file']); canvas.paste(im,(0,int(p['y']*s)))
+    os.remove(p['file'])
+canvas.save(out)
+`, JSON.stringify(parts), String(total), `${OUT}${name}.png`])
   } else if (opts.sections) {
     await page.screenshot({ path: `${OUT}${name}.png` })
     for (const [sel, label, extra] of opts.sections) {

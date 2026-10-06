@@ -31,7 +31,7 @@ export default function About() {
 
   return (
     <section id="nosotros" ref={root} className="relative py-24 md:py-36" aria-labelledby="nosotros-title">
-      <div className="container-x grid lg:grid-cols-[1.1fr_.9fr] gap-14 lg:gap-20 items-center">
+      <div className="container-x grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-14 lg:gap-20 items-center">
         <div>
           <SectionHeading eyebrow="Nosotros" title={<>Un colegio cercano, con <span className="text-coral">corazón grande</span></>} id="nosotros-title" />
           <p className="stmt mt-8 text-[clamp(1.35rem,2.4vw,1.9rem)] leading-snug font-medium text-indigo-deep">

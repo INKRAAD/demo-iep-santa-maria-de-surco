@@ -14,8 +14,8 @@ import feria from '../assets/fotos/hex-feria.webp'
 
 type Item = { src: string; alt: string; cap: string; kind: 'hex' | 'rect' | 'poster'; x: number; y: number; w: number; z: number; speed: number; ratio: string }
 const ITEMS: Item[] = [
-  { src: semana, kind: 'poster', alt: 'Afiche del colegio por Jueves Santo 2024 con el lema “Entrar para aprender y salir para servir”', cap: 'Semana Santa 2024', x: 3, y: 6, w: 17, z: -160, speed: 0.6, ratio: '540/958' },
   { src: aula, kind: 'rect', alt: 'Clase de Inicial: alumnos sentados en el piso levantan la mano junto a su maestra', cap: 'Inicial en el aula', x: 27, y: 10, w: 43, z: 0, speed: 0.2, ratio: '3/2' },
+  { src: semana, kind: 'poster', alt: 'Afiche del colegio por Jueves Santo 2024 con el lema “Entrar para aprender y salir para servir”', cap: 'Semana Santa 2024', x: 3, y: 6, w: 17, z: -160, speed: 0.6, ratio: '540/958' },
   { src: congreso, kind: 'hex', alt: 'Estudiantes de Secundaria con medallas en una visita institucional', cap: 'Visita institucional', x: 74, y: 3, w: 20, z: -260, speed: 0.8, ratio: '1/1' },
   { src: desfile, kind: 'hex', alt: 'Alumnos uniformados con la bandera peruana y el cartel del colegio en un desfile', cap: 'Desfile escolar', x: 15, y: 52, w: 18, z: 120, speed: -0.3, ratio: '1/1' },
   { src: abejita, kind: 'hex', alt: 'Niña de Inicial con disfraz de abejita', cap: 'Actuación de Inicial', x: 39, y: 62, w: 15, z: 200, speed: -0.5, ratio: '1/1' },
@@ -75,7 +75,7 @@ export default function SchoolLife() {
   return (
     <section id="vida-escolar" ref={root} className="relative py-24 md:py-36 bg-white overflow-hidden" aria-labelledby="vida-title">
       <div className="container-x">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-end">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-8 items-end">
           <SectionHeading eyebrow="Vida escolar" title={<>Un año lleno de <span className="text-coral">momentos</span></>} id="vida-title">
             Fe, cultura, deporte y celebración: las actividades que la familia SMS vive cada año.
           </SectionHeading>

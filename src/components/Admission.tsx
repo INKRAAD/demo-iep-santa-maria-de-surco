@@ -56,15 +56,15 @@ export default function Admission() {
     <section id="admision" className="relative py-24 md:py-36 bg-paper overflow-hidden" aria-labelledby="admision-title">
       <div aria-hidden="true" className="absolute inset-x-0 top-0 h-[55%] bg-indigo grain" />
       <div aria-hidden="true" className="absolute right-[-8%] top-[-12%] w-[38vw] max-w-[520px] aspect-square rounded-full border-[48px] border-coral/30" />
-      <div className="container-x relative grid lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-16">
+      <div className="container-x relative grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-16">
         <div className="text-white">
           <p className="eyebrow reveal text-[#FF9C9E] flex items-center gap-3"><span className="inline-block w-8 h-[2px] bg-current" aria-hidden="true" />Proceso de admisión</p>
           <h2 id="admision-title" className="display reveal mt-4 text-[clamp(3rem,7vw,6rem)] leading-[.95]">Admisión <span className="text-coral-light">2027</span></h2>
           <p className="reveal mt-6 text-lg text-white/85 max-w-lg">Te acompañamos en cada paso. Déjanos tus datos y el equipo del colegio se comunicará contigo para coordinar una visita.</p>
 
-          <ol className="reveal mt-10 grid sm:grid-cols-2 gap-3">
+          <ol className="reveal mt-10 grid grid-cols-2 gap-3">
             {ADMISSION_STEPS.map((s, i) => (
-              <li key={s.title} className="rounded-2xl bg-white/10 ring-1 ring-white/15 p-5 backdrop-blur-sm">
+              <li key={s.title} className="rounded-2xl bg-white/10 ring-1 ring-white/15 p-4 sm:p-5 backdrop-blur-sm">
                 <span className="display text-3xl text-coral-light">0{i + 1}</span>
                 <h3 className="mt-1 font-bold">{s.title}</h3>
                 <p className="mt-1 text-sm text-white/75">{s.text}</p>

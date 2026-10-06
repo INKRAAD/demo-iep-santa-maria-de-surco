@@ -24,13 +24,11 @@ const H1_LINES: { text: string; className?: string }[][] = [
 
 export default function Hero({ started }: { started: boolean }) {
   const root = useRef<HTMLElement>(null)
-  const [use3D, setUse3D] = useState(false)
+  const [use3D, setUse3D] = useState(canUse3D)
   const [ready3D, setReady3D] = useState(false)
   const [stageRef, stageInView] = useInView<HTMLDivElement>('100px')
   const cta1 = useMagnetic<HTMLAnchorElement>()
   const cta2 = useMagnetic<HTMLAnchorElement>()
-
-  useEffect(() => { setUse3D(canUse3D()) }, [])
 
   useEffect(() => {
     if (!started || !root.current) return
@@ -67,11 +65,11 @@ export default function Hero({ started }: { started: boolean }) {
         </svg>
       </div>
 
-      <div className="container-x relative grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-4 items-center min-h-[calc(100svh-180px)]">
+      <div className="container-x relative grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-4 items-center min-h-[calc(100svh-180px)]">
         <div className="hero-copy relative z-10 order-2 lg:order-1">
           <p className="hero-chip inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-[.8rem] font-semibold text-indigo shadow-[0_8px_30px_-12px_rgba(60,73,132,.45)]">
             <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full rounded-full bg-coral opacity-60 animate-ping motion-reduce:hidden" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-coral" /></span>
-            Admisión 2027 · Inicial, Primaria y Secundaria
+            Admisión 2027<span className="hidden sm:inline"> · Inicial, Primaria y Secundaria</span>
           </p>
 
           <h1 id="hero-title" className="display mt-6 text-[clamp(2.9rem,7.4vw,6.4rem)] text-ink">

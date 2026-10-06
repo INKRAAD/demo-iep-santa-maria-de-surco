@@ -24,7 +24,7 @@ export default function Location() {
           Estamos en {SCHOOL.street}, Santiago de Surco. Coordina tu visita y conoce nuestras aulas.
         </SectionHeading>
 
-        <div className="mt-14 grid lg:grid-cols-[1.25fr_1fr] gap-6">
+        <div className="mt-14 grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] gap-6">
           <div ref={mapRef} className="reveal relative min-h-[380px] lg:min-h-[520px] rounded-[2rem] overflow-hidden bg-indigo-soft ring-1 ring-indigo/10">
             {/* Placeholder de marca mientras carga el mapa */}
             <div className={`absolute inset-0 grid place-items-center transition-opacity duration-700 ${loaded ? 'opacity-0' : 'opacity-100'}`} aria-hidden={loaded}>
@@ -54,7 +54,7 @@ export default function Location() {
             </a>
           </div>
 
-          <ul className="grid sm:grid-cols-2 lg:grid-cols-1 gap-3">
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 min-w-0">
             {items.map(({ icon: Icon, label, value, href, ext }) => {
               const inner = (
                 <>

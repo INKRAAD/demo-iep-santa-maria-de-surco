@@ -131,7 +131,7 @@ export default function Levels() {
                 <span aria-hidden="true" className="pointer-events-none select-none absolute -bottom-[0.18em] left-[-0.04em] display text-[clamp(7rem,22vw,20rem)] leading-none whitespace-nowrap" style={{ color: 'transparent', WebkitTextStroke: `2px ${th.outline}` }}>
                   {l.name}
                 </span>
-                <div className={`container-x relative h-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center ${pinMode ? 'pt-6 pb-16' : 'py-20 md:py-24'}`}>
+                <div className={`container-x relative h-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${pinMode ? 'pt-6 pb-16' : 'py-20 md:py-24'}`}>
                   <div className="relative z-10">
                     <p className={`lv-in eyebrow ${th.accent} flex items-center gap-3`}>
                       <span className={`inline-grid place-items-center w-9 h-9 rounded-full text-[.7rem] tracking-normal ${th.chip}`}>{l.tag}</span>

@@ -14,7 +14,7 @@ export default function Reviews() {
     <section id="resenas" className="relative py-24 md:py-32 bg-indigo-night text-white overflow-hidden" aria-labelledby="resenas-title">
       <div aria-hidden="true" className="absolute -left-40 top-10 w-[520px] h-[520px] rounded-full bg-indigo/60 blur-3xl" />
       <div aria-hidden="true" className="absolute right-[-10%] bottom-[-30%] w-[480px] h-[480px] rounded-full bg-coral/20 blur-3xl" />
-      <div className="container-x relative grid lg:grid-cols-[.85fr_1.15fr] gap-14 items-start">
+      <div className="container-x relative grid grid-cols-1 lg:grid-cols-[.85fr_1.15fr] gap-14 items-start">
         <div className="reveal">
           <p className="eyebrow text-[#FF9C9E] flex items-center gap-3"><span className="inline-block w-8 h-[2px] bg-current" aria-hidden="true" />Reseñas reales</p>
           <h2 id="resenas-title" className="display mt-4 text-[clamp(2.2rem,5vw,4rem)]">Opiniones en <span className="text-coral-light">Google</span></h2>
@@ -29,7 +29,7 @@ export default function Reviews() {
             * Calificación y reseñas tomadas de la ficha pública de Google Maps a través de un servicio de terceros el {SCHOOL.ratingCheckedOn}. Cifra pendiente de verificar en vivo; se mostrará actualizada en la versión final.
           </p>
           <a href={SCHOOL.maps} target="_blank" rel="noopener noreferrer" className="btn btn-light mt-8">
-            ¿Eres familia SMS? Déjanos tu reseña <IconExternal size={17} />
+            <span className="hidden sm:inline">¿Eres familia SMS?</span> Déjanos tu reseña <IconExternal size={17} />
           </a>
         </div>
 

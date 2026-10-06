@@ -3,6 +3,8 @@ import { scrollToTarget } from '../lib/lenis'
 import { IconFacebook, IconLock, IconWhatsApp } from './Icons'
 import logoWhite from '../assets/logo/logo-horizontal-blanco.svg'
 
+const YEAR = new Date().getFullYear()
+
 export default function Footer() {
   return (
     <footer className="relative bg-indigo-night text-white overflow-hidden" aria-labelledby="footer-title">
@@ -10,7 +12,7 @@ export default function Footer() {
       {/* Cinta de cierre coral/azul */}
       <div aria-hidden="true" className="h-2 grid grid-cols-[2fr_1fr]"><span className="bg-indigo" /><span className="bg-coral" /></div>
       <div className="container-x py-16 md:py-20">
-        <div className="grid lg:grid-cols-[1.4fr_1fr_1fr] gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-12">
           <div>
             <img src={logoWhite} alt="Corporación Educativa “Santa María de Surco”" className="h-16 md:h-20 w-auto" width={298} height={80} loading="lazy" />
             <p className="display mt-8 text-3xl md:text-4xl max-w-md leading-tight">“Entrar para <span className="text-coral-light">aprender</span> y salir para <span className="text-coral-light">servir</span>”</p>
@@ -38,7 +40,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row gap-4 justify-between text-xs text-white/60">
-          <p>© {new Date().getFullYear()} {SCHOOL.legalName} · RUC {SCHOOL.ruc}</p>
+          <p>© {YEAR} {SCHOOL.legalName} · RUC {SCHOOL.ruc}</p>
           <p>Demo conceptual de rediseño · propuesta no oficial · los datos marcados “de ejemplo” son ilustrativos.</p>
         </div>
       </div>

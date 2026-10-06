@@ -5,6 +5,7 @@ import { scrollToTarget, startLenis, stopLenis } from '../lib/lenis'
 import { IconClose, IconLock, IconMenu, IconWhatsApp } from './Icons'
 import { waLink } from '../data/site'
 import logo from '../assets/logo/logo-horizontal.svg'
+import logoWhite from '../assets/logo/logo-horizontal-blanco.svg'
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
@@ -56,11 +57,11 @@ export default function Nav() {
         Saltar al contenido
       </a>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'} ${scrolled ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-20px_rgba(30,34,56,.4)]' : 'bg-transparent'}`}
+        className={`fixed inset-x-0 top-0 z-[60] transition-all duration-500 ${hidden && !open ? '-translate-y-full' : 'translate-y-0'} ${scrolled && !open ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-20px_rgba(30,34,56,.4)]' : 'bg-transparent'}`}
       >
         <nav className="container-x flex items-center justify-between gap-6 h-[72px]" aria-label="Principal">
           <a href="#inicio" onClick={(e) => go(e, '#inicio')} className="shrink-0" aria-label={`${SCHOOL.name} — ir al inicio`}>
-            <img src={logo} alt="Corporación Educativa “Santa María de Surco” — Inicial, Primaria, Secundaria" className="h-11 md:h-[52px] w-auto" width={194} height={52} />
+            <img src={open ? logoWhite : logo} alt="Corporación Educativa “Santa María de Surco” — Inicial, Primaria, Secundaria" className="h-11 md:h-[52px] w-auto" width={194} height={52} />
           </a>
           <ul className="hidden lg:flex items-center gap-1">
             {NAV.map((n) => (
@@ -84,7 +85,7 @@ export default function Nav() {
           </div>
           <button
             ref={menuBtn}
-            className="lg:hidden inline-flex items-center gap-2 rounded-full bg-indigo text-white px-4 py-2.5 text-sm font-bold"
+            className={`lg:hidden inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold ${open ? 'bg-white text-indigo' : 'bg-indigo text-white'}`}
             aria-expanded={open}
             aria-controls="menu-movil"
             onClick={() => setOpen((v) => !v)}
@@ -102,7 +103,7 @@ export default function Nav() {
             role="dialog"
             aria-modal="true"
             aria-label="Menú de navegación"
-            className="fixed inset-0 z-40 bg-indigo grain text-white lg:hidden flex flex-col pt-24 pb-8 px-6 overflow-y-auto"
+            className="fixed inset-0 z-[55] bg-indigo grain text-white lg:hidden flex flex-col pt-24 pb-8 px-6 overflow-y-auto"
             initial={{ clipPath: 'circle(0% at 90% 36px)' }}
             animate={{ clipPath: 'circle(150% at 90% 36px)' }}
             exit={{ clipPath: 'circle(0% at 90% 36px)' }}
