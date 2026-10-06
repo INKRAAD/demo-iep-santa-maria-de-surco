@@ -1,5 +1,5 @@
 {
-  "name": "site",
+  "name": "demo-iep-santa-maria-de-surco",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "screenshots": "node scripts/screenshots.mjs",
+    "qa": "node scripts/check-interactions.mjs",
+    "og": "node scripts/og.mjs"
   },
   "dependencies": {
     "@fontsource-variable/montserrat": "^5.3.0",
