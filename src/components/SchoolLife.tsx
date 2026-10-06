@@ -119,7 +119,7 @@ export default function SchoolLife() {
                 className={`depth-item group relative lg:absolute ${it.kind === 'rect' ? 'col-span-2' : ''} ${i % 2 && it.kind === 'hex' ? 'translate-y-8 lg:translate-y-0' : ''}`}
                 style={{ ['--x' as string]: `${it.x}%`, ['--y' as string]: `${it.y}%`, ['--w' as string]: `${it.w}%`, ['--z' as string]: `${it.z}px` }}
               >
-                <div className="depth-media lg:[transform:translateZ(var(--z))] transition-transform duration-700 group-hover:[transform:translateZ(calc(var(--z)+60px))]">
+                <div className="depth-media relative lg:[transform:translateZ(var(--z))] transition-transform duration-700 group-hover:[transform:translateZ(calc(var(--z)+60px))]">
                   {it.kind === 'hex' ? (
                     <div className="relative">
                       <div aria-hidden="true" className={`absolute inset-0 hex translate-x-2.5 translate-y-2.5 ${i % 2 ? 'bg-coral' : 'bg-indigo'}`} />
