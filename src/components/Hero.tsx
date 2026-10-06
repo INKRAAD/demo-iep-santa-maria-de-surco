@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useRef, useState, type ReactNode 
 import { gsap } from '../lib/gsap'
 import { canUse3D, prefersReducedMotion } from '../lib/env'
 import { scrollToTarget } from '../lib/lenis'
+import { markIntroDone, setHero3DState } from '../lib/intro'
 import { useMagnetic } from '../hooks/useMagnetic'
 import { useInView } from '../hooks/useInView'
 import { SCHOOL, waLink } from '../data/site'
@@ -30,11 +31,31 @@ export default function Hero({ started }: { started: boolean }) {
   const cta1 = useMagnetic<HTMLAnchorElement>()
   const cta2 = useMagnetic<HTMLAnchorElement>()
 
+  // Señal del estado del 3D para QA/capturas
+  useEffect(() => { setHero3DState(use3D ? (ready3D ? 'ready' : 'loading') : 'off') }, [use3D, ready3D])
+
+  // Si el 3D no responde en un tiempo razonable, se queda la versión SVG (siempre visible debajo).
+  useEffect(() => {
+    if (!use3D || ready3D) return
+    const t = window.setTimeout(() => setUse3D(false), 8000)
+    return () => window.clearTimeout(t)
+  }, [use3D, ready3D])
+
   useEffect(() => {
     if (!started || !root.current) return
-    if (prefersReducedMotion()) return
+    // Sin animación (movimiento reducido o pestaña oculta): el contenido ya está en su estado final.
+    if (prefersReducedMotion() || document.hidden) { markIntroDone(); return }
+    const INTRO = '.hero-chip, .hero-word, .hero-underline-path, .hero-fade, .hero-stage'
+    let tl: gsap.core.Timeline | null = null
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
+      tl = gsap.timeline({
+        defaults: { ease: 'expo.out' },
+        onComplete: () => {
+          // Estado final = estilos CSS por defecto (visibles): se limpian los estilos en línea de la intro.
+          gsap.set(INTRO, { clearProps: 'transform,opacity,strokeDashoffset' })
+          markIntroDone()
+        },
+      })
       tl.from('.hero-chip', { y: 20, opacity: 0, duration: 0.8 })
         .from('.hero-word', { yPercent: 115, rotate: 4, duration: 1.1, stagger: 0.07 }, '-=0.5')
         .from('.hero-underline-path', { strokeDashoffset: 320, duration: 1.2, ease: 'power3.inOut' }, '-=0.6')
@@ -47,7 +68,16 @@ export default function Hero({ started }: { started: boolean }) {
       gsap.to('.hero-blob-a', { yPercent: 30, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true } })
       gsap.to('.hero-blob-b', { yPercent: -25, xPercent: 10, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true } })
     }, root)
-    return () => ctx.revert()
+    // Failsafe: si la intro se atrasa o se interrumpe (equipo lento, rAF pausado), salta al estado final.
+    const failsafe = window.setTimeout(() => { if (tl && tl.progress() < 1) tl.progress(1) }, 4000)
+    // Si la pestaña se oculta a mitad de intro, se completa de inmediato.
+    const onVis = () => { if (document.hidden && tl && tl.progress() < 1) tl.progress(1) }
+    document.addEventListener('visibilitychange', onVis)
+    return () => {
+      window.clearTimeout(failsafe)
+      document.removeEventListener('visibilitychange', onVis)
+      ctx.revert() // revert devuelve los estilos originales (visibles)
+    }
   }, [started])
 
   return (

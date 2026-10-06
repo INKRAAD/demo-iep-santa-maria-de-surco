@@ -80,7 +80,7 @@ npm run preview -- --host 127.0.0.1 --port 47391
 
 # Capturas y QA (con el preview levantado en 127.0.0.1:47391; usa Google Chrome instalado)
 npm run screenshots  # escritorio, móvil y página completa en screenshots/
-npm run qa           # valida formulario, envío simulado y menú móvil
+npm run qa           # valida formulario, envío simulado, menú móvil y robustez del hero (rAF congelado, red de seguridad CSS, sin JS)
 npm run og           # regenera public/og-image.png
 ```
 Para usar el Chromium de Playwright en vez de Chrome: `npx playwright install chromium` y `PW_CHANNEL=chromium npm run screenshots`.
@@ -89,6 +89,12 @@ Para usar el Chromium de Playwright en vez de Chrome: `npx playwright install ch
 - Escritorio: `screenshots/desktop.png` (hero), `screenshots/desktop-*.png` (secciones), `screenshots/desktop-full.png` (página completa, modo movimiento reducido).
 - Móvil (390×844 @2x): `screenshots/mobile.png`, `screenshots/mobile-*.png`, `screenshots/mobile-full.png`, `screenshots/mobile-menu.png`.
 - Formulario: `screenshots/desktop-form-errores.png`, `screenshots/desktop-form-enviado.png`.
+- Robustez del hero: `screenshots/qa-raf-congelado.png` (animaciones detenidas → failsafes) y `screenshots/qa-sin-js.png` (sin JavaScript → hero estático del `<noscript>`).
+
+### Intro del hero y capturas
+- El estado **por defecto** del hero (CSS) es el final y visible; GSAP solo anima *desde* oculto cuando arranca la intro y, al terminar, limpia los estilos en línea.
+- Redes de seguridad: el loader se retira a los 4,5 s pase lo que pase, la intro del hero salta a su estado final a los 4 s si se atrasa (o si la pestaña se oculta), y a los 9 s una regla CSS (`html[data-intro="forced"]`) fuerza todo visible aunque falle JS/GSAP. Sin JavaScript se muestra un hero estático en `<noscript>`.
+- Señales en `<html>` para QA: `data-intro="done"` cuando la intro termina (o `"forced"` si actuó la red de seguridad) y `data-hero3d="loading|ready|off"`. `npm run screenshots` espera `data-intro` + que el 3D deje de cargar + el fundido SVG→3D, y además comprueba que titular, texto y botones estén en su estado final antes de capturar (si no, lo reporta como error).
 
 ## Créditos de imágenes
 - Todas las fotos son **del propio colegio** (web oficial y Facebook): aula de Inicial (`IMG_7750.jpg`), afiche de Semana Santa 2024 y recortes del collage de actividades (desfile, feria, visita institucional, abejita, danza). Logo oficial del colegio. No se usaron bancos de imágenes. Las fotos de los banners de servicios de la web actual (aparentemente de stock) **no** se usaron.

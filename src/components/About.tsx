@@ -21,7 +21,7 @@ export default function About() {
   useEffect(() => {
     if (!root.current || prefersReducedMotion()) return
     const ctx = gsap.context(() => {
-      gsap.fromTo('.stmt-word', { opacity: 0.14 }, { opacity: 1, stagger: 0.08, ease: 'none', scrollTrigger: { trigger: '.stmt', start: 'top 80%', end: 'bottom 45%', scrub: true } })
+      gsap.fromTo('.stmt-word', { opacity: 0.14 }, { opacity: 1, stagger: 0.08, ease: 'none', scrollTrigger: { trigger: '.stmt', start: 'top 85%', end: 'bottom 70%', scrub: true } })
       gsap.fromTo('.about-img', { scale: 1.18 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.about-frame', start: 'top bottom', end: 'bottom top', scrub: true } })
       gsap.fromTo('.about-frame', { clipPath: 'inset(18% 12% 18% 12% round 220px 220px 32px 32px)' }, { clipPath: 'inset(0% 0% 0% 0% round 220px 220px 32px 32px)', ease: 'power2.out', scrollTrigger: { trigger: '.about-frame', start: 'top 90%', end: 'top 35%', scrub: true } })
       gsap.from('.about-quote', { y: 60, opacity: 0, rotate: -4, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.about-frame', start: 'top 60%' } })

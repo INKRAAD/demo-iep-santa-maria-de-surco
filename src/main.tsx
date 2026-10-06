@@ -6,6 +6,9 @@ import '@fontsource/playfair-display/latin-600-italic.css'
 import '@fontsource/playfair-display/latin-700-italic.css'
 import './index.css'
 import App from './App'
+import { armIntroSafetyNet } from './lib/intro'
+
+armIntroSafetyNet()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

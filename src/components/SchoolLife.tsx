@@ -86,7 +86,7 @@ export default function SchoolLife() {
         </div>
       </div>
 
-      <ul ref={rail} className="mt-12 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 px-[max(1.25rem,calc((100vw-1240px)/2))] [scrollbar-width:thin]" tabIndex={0} aria-label="Actividades anuales del colegio">
+      <ul ref={rail} className="mt-12 flex gap-4 overflow-x-auto snap-x snap-mandatory pb-6 px-[max(1.25rem,calc((100vw_-_1240px)/2))] scroll-px-[max(1.25rem,calc((100vw_-_1240px)/2))] [scrollbar-width:thin]" tabIndex={0} aria-label="Actividades anuales del colegio">
         {ACTIVITIES.map((a, i) => {
           const style = ['bg-indigo text-white', 'bg-coral-soft text-ink', 'bg-paper text-ink ring-1 ring-indigo/10', 'bg-indigo-soft text-ink'][i % 4]
           return (
@@ -107,7 +107,7 @@ export default function SchoolLife() {
       {/* Galería con profundidad */}
       <div className="container-x mt-20 md:mt-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
-          <h3 className="display text-[clamp(2rem,4vw,3.2rem)] text-ink">Galería <span className="text-coral">SMS</span></h3>
+          <h3 id="galeria" className="display scroll-mt-28 text-[clamp(2rem,4vw,3.2rem)] text-ink">Galería <span className="text-coral">SMS</span></h3>
           <a href={SCHOOL.facebook} target="_blank" rel="noopener noreferrer" className="btn btn-ghost"><IconFacebook size={20} /> Más fotos en Facebook</a>
         </div>
         <div className="depth-stage relative mt-10 lg:h-[860px] [perspective:1400px]">

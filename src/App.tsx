@@ -22,7 +22,9 @@ const skipLoader = () => prefersReducedMotion() || new URLSearchParams(window.lo
 
 export default function App() {
   const [loading, setLoading] = useState(() => !skipLoader())
+  const [revealed, setRevealed] = useState(() => skipLoader())
   const done = useCallback(() => setLoading(false), [])
+  const reveal = useCallback(() => setRevealed(true), [])
 
   useEffect(() => { initLenis() }, [])
 
@@ -37,18 +39,29 @@ export default function App() {
       })
       gsap.set('.reveal', { opacity: 0, y: 40 })
     })
+    // Failsafe: si algún .reveal quedó oculto dentro de la pantalla (trigger perdido, salto brusco), se muestra.
+    const rescue = () => {
+      document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
+        const r = el.getBoundingClientRect()
+        if (r.top < window.innerHeight && r.bottom > 0 && parseFloat(getComputedStyle(el).opacity) < 0.05 && !gsap.isTweening(el)) {
+          gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' })
+        }
+      })
+    }
+    ScrollTrigger.addEventListener('scrollEnd', rescue)
+    const rescueTimer = window.setInterval(rescue, 2500)
     const t = window.setTimeout(() => ScrollTrigger.refresh(), 600)
     window.addEventListener('load', () => ScrollTrigger.refresh())
-    return () => { ctx.revert(); window.clearTimeout(t) }
+    return () => { ctx.revert(); window.clearTimeout(t); window.clearInterval(rescueTimer); ScrollTrigger.removeEventListener('scrollEnd', rescue) }
   }, [])
 
   return (
     <>
-      {loading && <Loader onDone={done} />}
+      {loading && <Loader onReveal={reveal} onDone={done} />}
       <Cursor />
       <Nav />
       <main id="contenido">
-        <Hero started={!loading} />
+        <Hero started={revealed} />
         <Marquee />
         <About />
         <Counters />

@@ -110,3 +110,8 @@
   .depth-item { left: var(--x); top: var(--y); width: var(--w); transform-style: preserve-3d; }
   .depth-media { transform-style: preserve-3d; }
 }
+
+/* Red de seguridad de la intro: si no terminó a tiempo, el hero queda en su estado final visible. */
+html[data-intro='forced'] .site-loader { display: none !important; }
+html[data-intro='forced'] :is(.hero-chip, .hero-word, .hero-fade, .hero-stage, .hero-blob) { opacity: 1 !important; transform: none !important; }
+html[data-intro='forced'] .hero-underline-path { stroke-dashoffset: 0 !important; }
